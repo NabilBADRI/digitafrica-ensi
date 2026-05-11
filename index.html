@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Summer school 2026 – Actor and Topic-Aware Stance Detection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f8f9fa;
+    --bg3: #f0f2f5;
+    --border: rgba(0,0,0,0.1);
+    --accent: #4f9eff;
+    --accent2: #a78bfa;
+    --accent3: #34d399;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --card: rgba(0,0,0,0.03);
+    --card-hover: rgba(0,0,0,0.06);
+    --pro-pal: #34d399;
+    --pro-isr: #60a5fa;
+    --neutral: #a78bfa;
+    --favor: #34d399;
+    --against: #f87171;
+    --neither: #facc15;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: .03em;
+  }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); font-size: .85rem; text-decoration: none;
+    font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links .dropdown { position: relative; }
+  .nav-links .dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: .5rem 0; min-width: 180px;
+    margin-top: 8px;
+  }
+  .nav-links .dropdown:hover .dropdown-menu { display: block; }
+  .nav-links .dropdown-menu a {
+    display: block; padding: .5rem 1rem; text-transform: none;
+    font-size: .82rem; letter-spacing: 0;
+  }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 22px; height: 2px; background: var(--muted); border-radius: 2px; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden; padding: 8rem 2rem 4rem;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: .08;
+    background-image:
+      linear-gradient(rgba(79,158,255,.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,158,255,.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(79,158,255,.08) 0%, transparent 70%);
+    top: -100px; right: -100px; pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(167,139,250,.06) 0%, transparent 70%);
+    bottom: -50px; left: -50px; pointer-events: none;
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(79,158,255,.08); border: 1px solid rgba(79,158,255,.3);
+    padding: .3rem .9rem; border-radius: 100px;
+    font-size: .75rem; font-weight: 600; color: var(--accent);
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: #000;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 1.05rem; color: var(--muted); max-width: 680px;
+    margin-bottom: 2.5rem; line-height: 1.8;
+  }
+  .hero-stats {
+    display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .stat {
+    display: flex; flex-direction: column;
+    border-left: 2px solid var(--accent); padding-left: 1rem;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif; font-size: 2rem; color: #000; line-height: 1;
+  }
+  .stat-label { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .25rem; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 1.6rem; border-radius: 8px;
+    font-size: .9rem; font-weight: 600; text-decoration: none;
+    transition: all .2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn-primary:hover { background: #2a8aff; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--text); border: 1px solid var(--border);
+  }
+  .btn-outline:hover { background: var(--card); border-color: rgba(0,0,0,.2); }
+  .btn-ghost {
+    background: transparent; color: var(--muted); border: 1px solid var(--border);
+    font-size: .8rem; padding: .5rem 1.2rem;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(0,0,0,.2); }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: .8;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: #000; margin-bottom: 1rem; line-height: 1.2;
+  }
+  .section-sub { color: var(--muted); font-size: 1rem; max-width: 640px; line-height: 1.8; margin-bottom: 3rem; }
+
+  /* ── OVERVIEW ── */
+  #overview { background: var(--bg2); }
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.8rem;
+    transition: background .2s, border-color .2s, transform .2s;
+  }
+  .card:hover { background: var(--card-hover); border-color: rgba(0,0,0,.15); transform: translateY(-2px); }
+  .card-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .5rem; color: #000; }
+  .card p { font-size: .88rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── TASKS ── */
+  #tasks { background: var(--bg); }
+  .tasks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .task-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+  .task-header {
+    padding: 1.5rem 1.8rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .task-letter {
+    width: 42px; height: 42px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif; font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+  }
+  .letter-a { background: rgba(79,158,255,.15); color: var(--accent); border: 1px solid rgba(79,158,255,.3); }
+  .letter-b { background: rgba(167,139,250,.15); color: var(--accent2); border: 1px solid rgba(167,139,250,.3); }
+  .task-header-info h3 { font-size: 1rem; font-weight: 600; color: #000; margin-bottom: .25rem; }
+  .task-header-info p { font-size: .83rem; color: var(--muted); }
+  .task-body { padding: 1.5rem 1.8rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.4rem; }
+  .tag {
+    font-size: .72rem; font-weight: 600; padding: .25rem .7rem; border-radius: 100px; letter-spacing: .05em;
+  }
+  .tag-pro-pal { background: rgba(52,211,153,.12); color: var(--pro-pal); border: 1px solid rgba(52,211,153,.25); }
+  .tag-pro-isr { background: rgba(96,165,250,.12); color: var(--pro-isr); border: 1px solid rgba(96,165,250,.25); }
+  .tag-neutral { background: rgba(167,139,250,.12); color: var(--neutral); border: 1px solid rgba(167,139,250,.25); }
+  .tag-favor { background: rgba(52,211,153,.12); color: var(--favor); border: 1px solid rgba(52,211,153,.25); }
+  .tag-against { background: rgba(248,113,113,.12); color: var(--against); border: 1px solid rgba(248,113,113,.25); }
+  .tag-neither { background: rgba(250,204,21,.12); color: var(--neither); border: 1px solid rgba(250,204,21,.25); }
+  .dataset-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; margin-bottom: 1.4rem; }
+  .meta-item { background: var(--bg3); border-radius: 8px; padding: .7rem .8rem; }
+  .meta-val { font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: var(--accent); font-weight: 500; }
+  .meta-key { font-size: .7rem; color: var(--muted); margin-top: .15rem; }
+  .example-block {
+    background: var(--bg3); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: .7rem;
+    border-left: 3px solid transparent;
+  }
+  .ex-pal { border-color: var(--pro-pal); }
+  .ex-isr { border-color: var(--pro-isr); }
+  .ex-neu { border-color: var(--neutral); }
+  .ex-fav { border-color: var(--favor); }
+  .ex-aga { border-color: var(--against); }
+  .ex-nei { border-color: var(--neither); }
+  .ex-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .35rem; }
+  .ex-pal .ex-label { color: var(--pro-pal); }
+  .ex-isr .ex-label { color: var(--pro-isr); }
+  .ex-neu .ex-label { color: var(--neutral); }
+  .ex-fav .ex-label { color: var(--favor); }
+  .ex-aga .ex-label { color: var(--against); }
+  .ex-nei .ex-label { color: var(--neither); }
+  .ex-text { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+  .ex-text[dir="rtl"] { font-size: .85rem; font-family: 'DM Sans', sans-serif; }
+
+  /* ── EVALUATION ── */
+  #evaluation { background: var(--bg2); }
+  .eval-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; align-items: start; }
+  .eval-primary {
+    background: linear-gradient(135deg, rgba(79,158,255,.08), rgba(167,139,250,.06));
+    border: 1px solid rgba(79,158,255,.25);
+    border-radius: 16px; padding: 2rem; text-align: center;
+  }
+  .eval-primary-label { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+  .eval-primary-metric { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--accent); margin-bottom: .5rem; }
+  .eval-primary-sub { font-size: .82rem; color: var(--muted); }
+  .eval-metrics { display: flex; flex-direction: column; gap: 1rem; }
+  .eval-metric-row {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem;
+  }
+  .eval-check { width: 22px; height: 22px; border-radius: 50%; background: rgba(52,211,153,.15); border: 1px solid rgba(52,211,153,.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .eval-check svg { width: 12px; height: 12px; stroke: var(--accent3); }
+  .eval-metric-name { font-weight: 600; font-size: .92rem; color: #000; }
+  .eval-metric-desc { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+  .eval-note { margin-top: 1.5rem; font-size: .85rem; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; line-height: 1.7; }
+  .eval-note strong { color: var(--text); }
+
+  /* ── TIMELINE ── */
+  #dates { background: var(--bg); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2)); opacity: .3; }
+  .tl-item { position: relative; margin-bottom: 1.8rem; }
+  .tl-dot { position: absolute; left: -2rem; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .tl-dot.active { border-color: var(--accent); background: rgba(79,158,255,.15); }
+  .tl-dot.warning { border-color: #f59e0b; background: rgba(245,158,11,.15); }
+  .tl-dot .inner { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .tl-date { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--accent); margin-bottom: .2rem; }
+  .tl-title { font-size: .95rem; font-weight: 600; color: #000; }
+  .tl-note { display: inline-flex; align-items: center; gap: .3rem; margin-top: .3rem; font-size: .75rem; color: #f59e0b; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.2); padding: .25rem .6rem; border-radius: 100px; }
+
+  /* ── FAQ ── */
+  #guidelines { background: var(--bg2); }
+  .faq-list { display: flex; flex-direction: column; gap: .6rem; }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1rem 1.2rem; cursor: pointer; font-size: .92rem; font-weight: 500; color: #000;
+    transition: background .15s;
+  }
+  .faq-q:hover { background: var(--card-hover); }
+  .faq-icon { transition: transform .2s; color: var(--muted); flex-shrink: 0; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    display: none; padding: 0 1.2rem 1rem; font-size: .87rem; color: var(--muted); line-height: 1.75;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-a a { color: var(--accent); text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+
+  /* ── ORGANIZERS ── */
+  #organizers { background: var(--bg); }
+  .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.2rem; }
+  .org-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 1.4rem 1rem; text-align: center;
+    transition: all .2s;
+  }
+  .org-card:hover { background: var(--card-hover); transform: translateY(-3px); }
+  .org-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff;
+    margin: 0 auto 1rem;
+  }
+  .org-name { font-size: .88rem; font-weight: 600; color: #000; margin-bottom: .3rem; line-height: 1.3; }
+  .org-affil { font-size: .75rem; color: var(--muted); line-height: 1.4; }
+
+  /* ── LEADERBOARD ── */
+  #leaderboard { background: var(--bg2); }
+  .lb-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+  .lb-tab {
+    padding: .5rem 1.2rem; border-radius: 8px; font-size: .85rem; font-weight: 500;
+    cursor: pointer; border: 1px solid var(--border); color: var(--muted); background: transparent;
+    transition: all .2s;
+  }
+  .lb-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .lb-panel { display: none; }
+  .lb-panel.active { display: block; }
+  .lb-table { width: 100%; border-collapse: collapse; }
+  .lb-table th {
+    font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted);
+    padding: .7rem 1rem; border-bottom: 1px solid var(--border); text-align: left;
+  }
+  .lb-table td { padding: .9rem 1rem; font-size: .88rem; border-bottom: 1px solid rgba(0,0,0,.04); }
+  .lb-table tbody tr:hover td { background: var(--card); }
+  .lb-empty { text-align: center; padding: 3rem; color: var(--muted); font-size: .9rem; }
+  .rank-medal { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: .75rem; font-weight: 700; }
+  .rank-1 { background: rgba(250,204,21,.15); color: #facc15; }
+  .rank-2 { background: rgba(200,200,200,.1); color: #d1d5db; }
+  .rank-3 { background: rgba(180,120,60,.15); color: #cd7f32; }
+
+  /* ── CTA ── */
+  #participate { background: var(--bg3); border-top: 1px solid var(--border); }
+  .cta-box {
+    background: linear-gradient(135deg, rgba(79,158,255,.08) 0%, rgba(167,139,250,.06) 100%);
+    border: 1px solid rgba(79,158,255,.2);
+    border-radius: 20px; padding: 3rem 2rem; text-align: center;
+  }
+  .cta-box h2 { margin-bottom: 1rem; }
+  .cta-box p { color: var(--muted); margin-bottom: 2rem; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+  .btn-accent2 { background: var(--accent2); color: #fff; }
+  .btn-accent2:hover { background: #c4b5fd; transform: translateY(-1px); }
+  .btn-accent3 { background: var(--accent3); color: #000; }
+  .btn-accent3:hover { background: #6ee7b7; transform: translateY(-1px); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto;
+    padding: 2rem;
+  }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .modal-header h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #000; }
+  .modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.4rem; line-height: 1; }
+  .modal-close:hover { color: #000; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center; font-size: .82rem; color: var(--muted);
+    line-height: 1.8;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .overview-grid, .tasks-grid { grid-template-columns: 1fr; }
+    .eval-grid { grid-template-columns: 1fr; }
+    .dataset-meta { grid-template-columns: repeat(2,1fr); }
+    .hero-stats { gap: 1.2rem; }
+    section { padding: 4rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#top">Summer school 2026</a>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#tasks">Tasks</a></li>
+    <li><a href="#evaluation">Evaluation</a></li>
+    <li><a href="#dates">Dates</a></li>
+    <li><a href="#guidelines">Guidelines</a></li>
+    <li><a href="#organizers">Organizers</a></li>
+    <li class="dropdown">
+      <a href="#">Leaderboard ▾</a>
+      <div class="dropdown-menu">
+        <a href="#leaderboard" onclick="switchTab('a')">SubTask A</a>
+        <a href="#leaderboard" onclick="switchTab('b')">SubTask B</a>
+      </div>
+    </li>
+    <li><a href="#participate">Participate</a></li>
+  </ul>
+  <div class="hamburger" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- LEADERBOARD MODAL (SubTask A) -->
+<div class="modal-overlay" id="modal-a">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>SubTask A – Leaderboard</h3>
+      <button class="modal-close" onclick="closeModal('modal-a')">×</button>
+    </div>
+    <table class="lb-table" style="width:100%">
+      <thead><tr>
+        <th>Rank</th><th>Team</th><th>Macro F1</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>Date</th>
+      </tr></thead>
+      <tbody id="modal-a-body"><tr><td colspan="7" class="lb-empty">Results will appear after the evaluation period closes.</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="top" id="hero" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 2rem 4rem;">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner container">
+    <div class="hero-badge"><span class="dot"></span>Co-located with LREC 2026</div>
+    <h1>Actor and <em>Topic-Aware</em><br/>Stance Detection<br/>in Public Discourse</h1>
+    <p class="hero-desc">Advancing stance detection in polarized social media discourse on the Palestinian-Israeli conflict through dual-framework analysis of actor-level alignments and cross-topic patterns.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">2</span><span class="stat-label">Subtasks</span></div>
+      <div class="stat"><span class="stat-num">2,606</span><span class="stat-label">Annotated Samples</span></div>
+      <div class="stat"><span class="stat-num">2</span><span class="stat-label">Languages</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://forms.gle/pPA6nS7CWvuNDUjh6" target="_blank">Register Now</a>
+      <a class="btn btn-outline" href="#tasks">Explore Tasks</a>
+      <a class="btn btn-ghost" href="mailto:stancenakba@gmail.com">Contact Organizers</a>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <span class="section-tag">// Research Overview</span>
+    <h2>About the Task</h2>
+    <p class="section-sub">The Summer school 2026 Shared Task addresses stance detection in polarized social media discourse on the Palestinian-Israeli conflict and related regional issues, introducing a novel dual-framework evaluation.</p>
+    <div style="font-size:.95rem;color:var(--muted);line-height:1.85;max-width:800px;margin-bottom:3rem;">
+      Participants will develop models to analyze social media posts across two subtasks: <strong style="color:var(--text)">Subtask A (Actor-Level Stance Detection)</strong> identifies whether authors lean Pro-Palestine, Pro-Israel, or remain Neutral, while <strong style="color:var(--text)">Subtask B (Cross-Topic Stance Detection)</strong> classifies positions on specific regional issues (Normalization with Israel, Refugee/Immigrant Presence) as Favor, Against, or Neither.
+      <br/><br/>
+      This dual-framework enables investigation of fundamental questions: <em style="color:var(--accent2)">How do general political alignments (actors) relate to positions on specific issues (targets)? Can a unified model handle diverse, context-dependent stances?</em>
+    </div>
+    <div class="overview-grid fade-up">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Dual Framework</h3>
+        <p>Distinguishes between actor-level political alignments and cross-topic stance patterns across two conflict-related subjects.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Bilingual Dataset</h3>
+        <p>English data for Subtask A, Arabic data for Subtask B — enabling multilingual NLP research in politically sensitive domains.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>2,606 Samples</h3>
+        <p>Carefully curated and annotated social media posts spanning multiple topics, stances, and linguistic registers.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Open Participation</h3>
+        <p>Free to join. Participants from academia and industry are welcome, individually or as a team. No prior registration fee required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section id="tasks">
+  <div class="container">
+    <span class="section-tag">// Challenge Details</span>
+    <h2>Task Descriptions</h2>
+    <p class="section-sub">Two subtasks with different objectives, datasets, and evaluation challenges — joined by a shared goal of understanding polarized discourse.</p>
+    <div class="tasks-grid fade-up">
+
+      <!-- SUBTASK A -->
+      <div class="task-card">
+        <div class="task-header">
+          <div class="task-letter letter-a">A</div>
+          <div class="task-header-info">
+            <h3>Actor-Level Stance Detection</h3>
+            <p>Build a model to classify the author's general political stance toward the Palestinian-Israeli conflict.</p>
+          </div>
+        </div>
+        <div class="task-body">
+          <div class="tag-row">
+            <span class="tag tag-pro-pal">Pro-Palestine</span>
+            <span class="tag tag-pro-isr">Pro-Israel</span>
+            <span class="tag tag-neutral">Neutral</span>
+          </div>
+          <div class="dataset-meta">
+            <div class="meta-item"><div class="meta-val">1,401</div><div class="meta-key">Total Samples</div></div>
+            <div class="meta-item"><div class="meta-val">English</div><div class="meta-key">Language</div></div>
+            <div class="meta-item"><div class="meta-val">70/15/15</div><div class="meta-key">Train/Dev/Test</div></div>
+          </div>
+          <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.8rem;font-weight:600;">Examples</div>
+          <div class="example-block ex-pal">
+            <div class="ex-label">Pro-Palestine</div>
+            <div class="ex-text">"The systematic displacement of Palestinian families from their ancestral homes represents a clear violation of international law and the right of return."</div>
+          </div>
+          <div class="example-block ex-isr">
+            <div class="ex-label">Pro-Israel</div>
+            <div class="ex-text">"Israel's defensive measures are necessary responses to existential threats, ensuring the safety of its citizens against terrorism."</div>
+          </div>
+          <div class="example-block ex-neu">
+            <div class="ex-label">Neutral</div>
+            <div class="ex-text">"The conflict involves competing territorial claims, with both populations having deep historical connections to the region."</div>
+          </div>
+          <div style="margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+            <a href="https://www.codabench.org/competitions/12653/" target="_blank" class="btn btn-primary" style="font-size:.8rem;padding:.5rem 1.1rem;">Participate on CodaBench</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTASK B -->
+      <div class="task-card">
+        <div class="task-header">
+          <div class="task-letter letter-b">B</div>
+          <div class="task-header-info">
+            <h3>Cross-Topic Stance Detection</h3>
+            <p>Build a unified model that predicts stance across multiple conflict-related topics.</p>
+          </div>
+        </div>
+        <div class="task-body">
+          <div class="tag-row">
+            <span class="tag tag-favor">Favor</span>
+            <span class="tag tag-against">Against</span>
+            <span class="tag tag-neither">Neither</span>
+          </div>
+          <div class="dataset-meta">
+            <div class="meta-item"><div class="meta-val">1,205</div><div class="meta-key">Total Samples</div></div>
+            <div class="meta-item"><div class="meta-val">Arabic</div><div class="meta-key">Language</div></div>
+            <div class="meta-item"><div class="meta-val">2</div><div class="meta-key">Topics Covered</div></div>
+          </div>
+          <div style="font-size:.78rem;color:var(--muted);margin-bottom:1rem;">
+            <div style="margin-bottom:.4rem;"><strong style="color:var(--text)">Topic 1:</strong> Normalization with Israel <span style="color:var(--muted);font-size:.75rem;">(577 samples)</span></div>
+            <div><strong style="color:var(--text)">Topic 2:</strong> Refugee/Immigrant Presence in Jordan <span style="color:var(--muted);font-size:.75rem;">(628 samples)</span></div>
+          </div>
+          <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.8rem;font-weight:600;">Examples</div>
+          <div class="example-block ex-fav">
+            <div class="ex-label">Favor</div>
+            <div class="ex-text" dir="rtl">التطبيع مع إسرائيل سيحسن الاقتصاد ويجلب الاستثمارات للمنطقة</div>
+          </div>
+          <div class="example-block ex-aga">
+            <div class="ex-label">Against</div>
+            <div class="ex-text" dir="rtl">التطبيع مع إسرائيل يعتبر خيانة لقضية فلسطين والشعب الفلسطيني</div>
+          </div>
+          <div class="example-block ex-nei">
+            <div class="ex-label">Neither</div>
+            <div class="ex-text" dir="rtl">التطبيع مع إسرائيل هو قضية معقدة لها جوانب اقتصادية وسياسية متعددة</div>
+          </div>
+          <div style="margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+            <a href="https://www.codabench.org/competitions/12662/" target="_blank" class="btn btn-accent2" style="font-size:.8rem;padding:.5rem 1.1rem;color:#fff;">Participate on CodaBench</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EVALUATION -->
+<section id="evaluation">
+  <div class="container">
+    <span class="section-tag">// Performance Metrics</span>
+    <h2>Evaluation Metrics</h2>
+    <p class="section-sub">Systems will be evaluated using standard classification metrics, with Macro F1 as the primary ranking criterion.</p>
+    <div class="eval-grid fade-up">
+      <div class="eval-primary">
+        <div class="eval-primary-label">Primary Metric</div>
+        <div class="eval-primary-metric">Macro F1</div>
+        <div class="eval-primary-sub">Teams ranked primarily by this score — ideal for multi-class problems with balanced performance emphasis.</div>
+      </div>
+      <div class="eval-metrics">
+        <div class="eval-metric-row">
+          <div class="eval-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>
+            <div class="eval-metric-name">Accuracy</div>
+            <div class="eval-metric-desc">Proportion of correctly classified samples across all classes.</div>
+          </div>
+        </div>
+        <div class="eval-metric-row">
+          <div class="eval-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>
+            <div class="eval-metric-name">Precision</div>
+            <div class="eval-metric-desc">Ratio of true positives to predicted positives, per class.</div>
+          </div>
+        </div>
+        <div class="eval-metric-row">
+          <div class="eval-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>
+            <div class="eval-metric-name">Recall</div>
+            <div class="eval-metric-desc">Ratio of true positives to actual positives, per class.</div>
+          </div>
+        </div>
+        <div class="eval-note">
+          <strong>Ranking:</strong> Teams will be ranked primarily by Macro F1 score. This metric is particularly suitable for multi-class problems and emphasizes balanced performance across all classes.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATES -->
+<section id="dates">
+  <div class="container">
+    <span class="section-tag">// Timeline</span>
+    <h2>Important Dates</h2>
+    <p class="section-sub">All deadlines are Anywhere on Earth (AoE). Mark your calendars and plan accordingly.</p>
+    <div class="timeline fade-up">
+      <div class="tl-item">
+        <div class="tl-dot active"><div class="inner"></div></div>
+        <div class="tl-date">January 15, 2026</div>
+        <div class="tl-title">Training Data Released</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot active"><div class="inner"></div></div>
+        <div class="tl-date">January 22, 2026</div>
+        <div class="tl-title">Test Data Released</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot active"><div class="inner"></div></div>
+        <div class="tl-date">February 19, 2026</div>
+        <div class="tl-title">System Submission Deadline</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot warning"></div>
+        <div class="tl-date">March 1 → March 7, 2026</div>
+        <div class="tl-title">System Paper Submission Deadline</div>
+        <div class="tl-note">⚠ Deadline Extended</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="inner" style="background:var(--accent2)"></div></div>
+        <div class="tl-date">March 15, 2026</div>
+        <div class="tl-title">Notification of Acceptance</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="inner" style="background:var(--accent2)"></div></div>
+        <div class="tl-date">March 21, 2026</div>
+        <div class="tl-title">Camera-Ready Deadline</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"><div class="inner" style="background:var(--accent3)"></div></div>
+        <div class="tl-date">May 11–16, 2026</div>
+        <div class="tl-title">Workshop Date (TBC)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDELINES / FAQ -->
+<section id="guidelines">
+  <div class="container">
+    <span class="section-tag">// Submission Info</span>
+    <h2>Guidelines &amp; FAQs</h2>
+    <p class="section-sub">Everything you need to know about participating, submitting, and presenting your work.</p>
+    <div class="faq-list fade-up" id="faq">
+      <!-- FAQs rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers">
+  <div class="container">
+    <span class="section-tag">// Our Team</span>
+    <h2>Organizing Committee</h2>
+    <p class="section-sub">For inquiries, contact: <a href="mailto:stancenakba@gmail.com" style="color:var(--accent);">stancenakba@gmail.com</a></p>
+    <div class="org-grid fade-up">
+      <div class="org-card">
+        <div class="org-avatar">KA</div>
+        <div class="org-name">Kholoud K. Aldous</div>
+        <div class="org-affil">Northwestern University in Qatar</div>
+      </div>
+      <div class="org-card">
+        <div class="org-avatar" style="background:linear-gradient(135deg,var(--accent3),#0891b2)">MB</div>
+        <div class="org-name">Md. Rafiul Biswas</div>
+        <div class="org-affil">Hamad Bin Khalifa University, Doha, Qatar</div>
+      </div>
+      <div class="org-card">
+        <div class="org-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">MB</div>
+        <div class="org-name">Mabrouka Bessghaier</div>
+        <div class="org-affil">Northwestern University in Qatar</div>
+      </div>
+      <div class="org-card">
+        <div class="org-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">KA</div>
+        <div class="org-name">Kais Attia</div>
+        <div class="org-affil">Individual Researcher</div>
+      </div>
+      <div class="org-card">
+        <div class="org-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">SI</div>
+        <div class="org-name">Shimaa Ibrahim</div>
+        <div class="org-affil">Northwestern University in Qatar</div>
+      </div>
+      <div class="org-card">
+        <div class="org-avatar" style="background:linear-gradient(135deg,#f59e0b,#84cc16)">WZ</div>
+        <div class="org-name">Wajdi Zaghouani</div>
+        <div class="org-affil">Northwestern University in Qatar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section id="leaderboard">
+  <div class="container">
+    <span class="section-tag">// Results</span>
+    <h2>Leaderboard</h2>
+    <p class="section-sub">Live results will appear after the evaluation period closes. Check back after the submission deadline.</p>
+    <div class="lb-tabs">
+      <button class="lb-tab active" onclick="switchTab('a')" id="tab-a">SubTask A</button>
+      <button class="lb-tab" onclick="switchTab('b')" id="tab-b">SubTask B</button>
+    </div>
+    <div class="lb-panel active" id="panel-a">
+      <table class="lb-table">
+        <thead><tr>
+          <th>Rank</th><th>Team Name</th><th>Macro F1</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>Submitted</th>
+        </tr></thead>
+        <tbody><tr><td colspan="7" class="lb-empty">Results will appear after the evaluation period closes.</td></tr></tbody>
+      </table>
+    </div>
+    <div class="lb-panel" id="panel-b">
+      <table class="lb-table">
+        <thead><tr>
+          <th>Rank</th><th>Team Name</th><th>Macro F1</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>Submitted</th>
+        </tr></thead>
+        <tbody><tr><td colspan="7" class="lb-empty">Results will appear after the evaluation period closes.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPATE -->
+<section id="participate">
+  <div class="container">
+    <div class="cta-box fade-up">
+      <h2>Ready to Participate?</h2>
+      <p>Join us in advancing stance detection research and understanding polarized discourse in social media. All skill levels welcome.</p>
+      <div class="cta-buttons">
+        <a class="btn btn-primary" href="https://forms.gle/pPA6nS7CWvuNDUjh6" target="_blank">Register Now</a>
+        <a class="btn btn-accent2" href="https://www.codabench.org/competitions/12653/" target="_blank">SubTask A: CodaBench</a>
+        <a class="btn btn-accent3" href="https://www.codabench.org/competitions/12662/" target="_blank">SubTask B: CodaBench</a>
+        <a class="btn btn-outline" href="mailto:stancenakba@gmail.com">Contact Organizers</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 StanceNakba Shared Task. All rights reserved.</p>
+  <p>Contact: <a href="mailto:stancenakba@gmail.com">stancenakba@gmail.com</a></p>
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    Supported by grant NPRP14C-0916-210015, funded by the Qatar Research, Development and Innovation Council (QRDI) and Qatar National Research Fund (QNRF).
+  </p>
+</footer>
+
+<script>
+// FAQ data
+const faqs = [
+  ["Who can participate?","Anyone who wants to can participate, either independently or by forming a team."],
+  ["Is there a fee to participate?","No, participation is completely free — but at least one team member should register for the conference."],
+  ["How do I sign up?","Follow the instructions on the CodaBench competition pages for each subtask, linked in the Participate section."],
+  ["Can I join multiple tasks?","Yes, you can participate in multiple different shared tasks simultaneously."],
+  ["Can I be on multiple teams under the same task?","This depends on the task. Contact the organizers to confirm their policy."],
+  ["What does 'evaluation period' mean?","The evaluation period is the window in which official competition takes place. Organizers release evaluation data at the start; system outputs are due before the deadline."],
+  ["How many runs can I submit?","This depends on the task. Task organizers often specify the allowed number per team. Check the task website or contact organizers."],
+  ["Do I need to write a paper?","Yes. If you register and request the dataset, you agree to submit a paper. It is a binding commitment."],
+  ["What happens if I don't submit a paper?","Strictly prohibited. Abandoning the task after receiving data may result in being banned from future participation."],
+  ["What is the paper format?","Short papers following NakbaNLP 2026 format (up to 4 pages + unlimited references). Templates: <a href='https://lrec2026.info/authors-kit' target='_blank'>LaTeX/Word templates</a>"],
+  ["How should the paper title be formatted?","Use: <strong>&lt;Team Name&gt; at &lt;Shared Task Name&gt;: &lt;Title&gt;</strong>"],
+  ["Must I cite the task overview paper?","Yes, each team must cite the shared task overview paper in their system paper."],
+  ["Must someone attend the conference?","Attendance in person is recommended, but virtual participation is possible if you cannot attend in person."],
+  ["Are papers anonymous?","No, shared task papers are not anonymous."],
+  ["Can I post my paper on arXiv?","Yes, authors are free to submit to arXiv at any time."],
+  ["Should I release my code?","You are highly encouraged to release code or data and include the URL in the paper to promote reproducibility."],
+];
+
+const faqEl = document.getElementById('faq');
+faqs.forEach(([q, a]) => {
+  const item = document.createElement('div');
+  item.className = 'faq-item';
+  item.innerHTML = `
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>${q}</span><span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a">${a}</div>`;
+  faqEl.appendChild(item);
+});
+
+// Leaderboard tabs
+function switchTab(id) {
+  ['a','b'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===id);
+    document.getElementById('panel-'+t).classList.toggle('active', t===id);
+  });
+}
+
+// Modal
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// Scroll animations
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
+
