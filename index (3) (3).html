@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DIGIT Africa Summer School 2026 – Tunis, Tunisia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f7f5f0;--bg2:#ffffff;--bg3:#eef0f5;
+  --navy:#0d1b3e;--blue:#1a56e8;--teal:#00b4a0;--gold:#e8a020;--rose:#e84060;
+  --text:#0d1b3e;--muted:#6b7a99;--border:rgba(13,27,62,0.1);
+  --card:rgba(255,255,255,0.9);--shadow:0 4px 32px rgba(13,27,62,0.08);--shadow-lg:0 16px 64px rgba(13,27,62,0.14);--r:16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 2.5rem;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(247,245,240,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s;}
+nav.scrolled{background:rgba(255,255,255,0.97);box-shadow:var(--shadow);}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;}
+.nav-logo-mark{width:42px;height:42px;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.nav-logo-mark img{width:100%;height:100%;object-fit:contain;}
+.nav-logo-text{font-size:.95rem;font-weight:700;color:var(--navy);letter-spacing:-.01em;}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a{color:var(--muted);font-size:.8rem;font-weight:500;text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-cta{background:var(--navy)!important;color:#fff!important;padding:.5rem 1.2rem;border-radius:8px;font-size:.8rem;font-weight:600;letter-spacing:.04em;}
+.nav-cta:hover{background:var(--blue)!important;transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.25rem;}
+.hamburger span{width:22px;height:2px;background:var(--navy);border-radius:2px;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:10rem 2.5rem 5rem;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hc{position:absolute;border-radius:50%;opacity:.07;}
+.hc1{width:900px;height:900px;background:var(--blue);top:-300px;right:-300px;}
+.hc2{width:600px;height:600px;background:var(--teal);bottom:-200px;left:-200px;}
+.hdots{position:absolute;inset:0;opacity:.35;
+  background-image:radial-gradient(circle,#0d1b3e 1px,transparent 1px);background-size:30px 30px;
+  mask-image:radial-gradient(ellipse 55% 55% at 75% 35%,black,transparent);}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1;}
+
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.8rem;
+  background:rgba(26,86,232,.07);border:1px solid rgba(26,86,232,.18);padding:.38rem 1rem;border-radius:100px;}
+.eyebrow-dot{width:7px;height:7px;background:var(--blue);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.6)}}
+.eyebrow-txt{font-size:.7rem;font-weight:700;color:var(--blue);letter-spacing:.14em;text-transform:uppercase;}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6.5vw,5.8rem);line-height:1.06;letter-spacing:-.025em;color:var(--navy);margin-bottom:2rem;font-weight:900;}
+h1 em{font-style:italic;color:var(--blue);}
+h1 .tl{color:var(--teal);}
+
+.hero-lead{font-size:1.1rem;color:var(--navy);max-width:700px;line-height:1.9;margin-bottom:1.2rem;font-weight:500;}
+.hero-lead strong{color:var(--navy);font-weight:700;}
+
+.workshops-row{display:flex;gap:.75rem;flex-wrap:wrap;margin:1.5rem 0;}
+.wb{display:flex;align-items:center;gap:.55rem;padding:.55rem 1.1rem;border-radius:10px;font-size:.85rem;font-weight:600;line-height:1;}
+.wb-a{background:rgba(26,86,232,.08);border:1px solid rgba(26,86,232,.2);color:var(--blue);}
+.wb-b{background:rgba(0,180,160,.08);border:1px solid rgba(0,180,160,.2);color:var(--teal);}
+
+.hero-note{display:flex;gap:1rem;align-items:flex-start;background:rgba(232,160,32,.07);border:1px solid rgba(232,160,32,.22);border-radius:12px;padding:1rem 1.2rem;max-width:700px;margin:1.5rem 0;}
+.hero-note .ni{font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;margin:2rem 0;}
+.stat{display:flex;flex-direction:column;}
+.sn{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:var(--navy);line-height:1;}
+.sl{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:.35rem;}
+
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem;}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.72rem 1.7rem;border-radius:10px;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .25s;cursor:pointer;border:none;font-family:'Outfit',sans-serif;}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,86,232,.3);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid rgba(13,27,62,.18);}
+.btn-outline:hover{background:var(--bg2);border-color:var(--navy);}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);font-size:.82rem;padding:.6rem 1.2rem;}
+.btn-ghost:hover{color:var(--navy);border-color:var(--muted);}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{background:#1245cc;transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,86,232,.3);}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:#009688;transform:translateY(-2px);}
+.btn-white{background:#fff;color:var(--navy);}
+.btn-white:hover{background:var(--bg3);transform:translateY(-2px);}
+.btn-ghost-w{background:transparent;color:rgba(255,255,255,.75);border:1.5px solid rgba(255,255,255,.25);}
+.btn-ghost-w:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.5);}
+
+/* LOGOS */
+#logos{background:var(--bg2);padding:3rem 2.5rem;border-bottom:1px solid var(--border);}
+.logos-inner{max-width:1100px;margin:0 auto;}
+.logos-lbl{font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);text-align:center;margin-bottom:2.5rem;font-weight:600;}
+.logos-grid{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
+.logo-item{display:flex;flex-direction:column;align-items:center;gap:1rem;opacity:.75;transition:opacity .25s;}
+.logo-item:hover{opacity:1;}
+.logo-box{width:160px;height:100px;background:#fff;border:2px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:.8rem;overflow:hidden;}
+.logo-box img{max-width:100%;max-height:100%;object-fit:contain;transition:filter .25s;}
+.logo-item:hover .logo-box img{filter:brightness(1.05);}
+.logo-name{font-size:.75rem;color:var(--navy);font-weight:600;text-align:center;line-height:1.4;max-width:140px;}
+
+/* SECTIONS */
+section{padding:6rem 2.5rem;position:relative;}
+.container{max-width:1100px;margin:0 auto;}
+.sec-label{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.3rem;}
+.sec-line{width:28px;height:2px;background:var(--blue);border-radius:2px;}
+.sec-txt{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--blue);letter-spacing:.18em;text-transform:uppercase;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.8vw,3.2rem);color:var(--navy);margin-bottom:1rem;line-height:1.12;font-weight:900;}
+.sec-sub{color:var(--navy);font-size:1.02rem;max-width:580px;line-height:1.85;margin-bottom:3rem;font-weight:500;}
+
+/* OVERVIEW */
+#overview{background:var(--bg2);}
+.ov-body{font-size:1.05rem;color:var(--navy);line-height:1.95;max-width:820px;margin-bottom:3rem;font-weight:500;}
+.ov-body strong{color:var(--navy);font-weight:700;}
+.ov-body em{color:var(--blue);font-style:italic;}
+.ov-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;box-shadow:var(--shadow);transition:all .3s;}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(26,86,232,.18);}
+.card-ic{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.3rem;}
+.ic-b{background:rgba(26,86,232,.08);}
+.ic-t{background:rgba(0,180,160,.08);}
+.ic-g{background:rgba(232,160,32,.08);}
+.ic-n{background:rgba(13,27,62,.06);}
+.card h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;letter-spacing:-.01em;}
+.card p{font-size:.92rem;color:var(--navy);line-height:1.75;font-weight:500;}
+
+/* TASKS */
+#tasks{background:var(--bg);}
+.tasks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;}
+.task-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:all .3s;}
+.task-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.task-hdr{padding:1.8rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:1.2rem;}
+.task-letter{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;flex-shrink:0;}
+.tl-a{background:rgba(26,86,232,.1);color:var(--blue);border:1px solid rgba(26,86,232,.2);}
+.tl-b{background:rgba(0,180,160,.1);color:var(--teal);border:1px solid rgba(0,180,160,.2);}
+.task-info h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;line-height:1.3;}
+.task-info p{font-size:.88rem;color:var(--navy);line-height:1.65;font-weight:500;}
+.task-body{padding:1.8rem 2rem;}
+.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;}
+.tag{font-size:.68rem;font-weight:700;padding:.28rem .8rem;border-radius:100px;letter-spacing:.07em;text-transform:uppercase;}
+.tg-b{background:rgba(26,86,232,.08);color:var(--blue);border:1px solid rgba(26,86,232,.18);}
+.tg-t{background:rgba(0,180,160,.08);color:var(--teal);border:1px solid rgba(0,180,160,.18);}
+.tg-g{background:rgba(232,160,32,.08);color:var(--gold);border:1px solid rgba(232,160,32,.18);}
+.tg-r{background:rgba(232,64,96,.08);color:var(--rose);border:1px solid rgba(232,64,96,.18);}
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem;}
+.meta-box{background:var(--bg3);border-radius:10px;padding:.85rem 1rem;border:1px solid var(--border);}
+.mv{font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--blue);font-weight:500;}
+.mk{font-size:.65rem;color:var(--muted);margin-top:.22rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.mlbl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem;}
+.mod{border-radius:10px;padding:1rem 1.15rem;margin-bottom:.6rem;border-left:3px solid transparent;background:var(--bg3);}
+.mb{border-color:var(--blue);}
+.mt{border-color:var(--teal);}
+.mg{border-color:var(--gold);}
+.mn{border-color:var(--navy);}
+.mod-lbl{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.32rem;}
+.lb{color:var(--blue);}
+.lt{color:var(--teal);}
+.lg{color:var(--gold);}
+.ln{color:var(--navy);}
+.mod-txt{font-size:.9rem;color:var(--navy);line-height:1.65;font-weight:500;}
+
+/* PROGRAM */
+#dates{background:var(--bg2);}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.timeline{position:relative;padding-left:2.2rem;}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--teal));opacity:.2;}
+.tl-item{position:relative;margin-bottom:1.8rem;}
+.tl-dot{position:absolute;left:-2.2rem;top:5px;width:16px;height:16px;border-radius:50%;background:var(--bg2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;}
+.td-done{border-color:var(--blue);background:rgba(26,86,232,.1);}
+.td-warn{border-color:var(--gold);background:rgba(232,160,32,.1);}
+.td-up{border-color:var(--teal);background:rgba(0,180,160,.1);}
+.tl-dot .inn{width:6px;height:6px;border-radius:50%;}
+.td-done .inn{background:var(--blue);}
+.td-up .inn{background:var(--teal);}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--blue);margin-bottom:.2rem;font-weight:500;}
+.tl-title{font-size:.95rem;font-weight:600;color:var(--navy);line-height:1.4;}
+.tl-badge{display:inline-flex;align-items:center;gap:.3rem;margin-top:.3rem;font-size:.68rem;color:var(--gold);background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2);padding:.2rem .6rem;border-radius:100px;}
+
+.prereq-box{background:linear-gradient(135deg,rgba(26,86,232,.04),rgba(0,180,160,.04));border:1px solid rgba(26,86,232,.1);border-radius:20px;padding:2.5rem;}
+.prereq-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:.75rem;}
+.prereq-sub{font-size:.95rem;color:var(--navy);line-height:1.8;margin-bottom:1.5rem;font-weight:500;}
+.prereq-item{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:1rem;font-size:.92rem;color:var(--navy);line-height:1.6;font-weight:500;}
+.pchk{width:22px;height:22px;border-radius:7px;background:rgba(0,180,160,.12);border:1px solid rgba(0,180,160,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
+.pchk svg{width:11px;height:11px;stroke:var(--teal);}
+.prereq-divider{border:none;border-top:1px solid var(--border);margin:1.5rem 0;}
+
+/* FAQ */
+#guidelines{background:var(--bg);}
+.faq-list{display:flex;flex-direction:column;gap:.5rem;max-width:780px;}
+.faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s;}
+.faq-item.open{border-color:rgba(26,86,232,.2);}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.4rem;cursor:pointer;font-size:.95rem;font-weight:600;color:var(--navy);transition:background .15s;}
+.faq-q:hover{background:var(--bg3);}
+.faq-icon{width:24px;height:24px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--muted);flex-shrink:0;transition:all .2s;}
+.faq-item.open .faq-icon{background:var(--blue);color:#fff;border-color:var(--blue);transform:rotate(45deg);}
+.faq-a{display:none;padding:0 1.4rem 1.2rem;font-size:.92rem;color:var(--navy);line-height:1.85;font-weight:500;}
+.faq-item.open .faq-a{display:block;}
+.faq-a a{color:var(--blue);}
+
+/* ORGANIZERS */
+#organizers{background:var(--bg2);}
+.org-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1.2rem;}
+.org-card{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:1.7rem 1.3rem;text-align:center;transition:all .3s;}
+.org-card:hover{background:var(--bg2);transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(26,86,232,.18);}
+.org-av{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin:0 auto 1.1rem;font-weight:700;}
+.org-name{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;line-height:1.3;}
+.org-affil{font-size:.78rem;color:var(--navy);line-height:1.5;font-weight:500;}
+
+/* CTA */
+#participate{background:var(--navy);overflow:hidden;position:relative;}
+#participate::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:rgba(26,86,232,.25);top:-250px;right:-250px;pointer-events:none;}
+#participate::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(0,180,160,.18);bottom:-150px;left:-150px;pointer-events:none;}
+.cta-inner{position:relative;z-index:1;text-align:center;max-width:680px;margin:0 auto;}
+.cta-inner h2{color:#fff;margin-bottom:1.1rem;}
+.cta-inner p{color:rgba(255,255,255,.6);margin-bottom:2.5rem;font-size:1rem;line-height:1.85;}
+.cta-btns{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;}
+
+/* FOOTER */
+footer{background:#080f24;padding:2.5rem;text-align:center;font-size:.8rem;color:rgba(255,255,255,.35);line-height:2.2;}
+footer a{color:rgba(255,255,255,.55);text-decoration:none;}
+footer a:hover{color:#fff;}
+footer strong{color:rgba(255,255,255,.65);}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1);}
+.reveal.visible{opacity:1;transform:none;}
+.d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;} .d4{transition-delay:.4s;}
+
+.hero-inner>*{opacity:0;transform:translateY(22px);animation:hi .85s cubic-bezier(.22,1,.36,1) forwards;}
+.hero-inner>*:nth-child(1){animation-delay:.05s;}
+.hero-inner>*:nth-child(2){animation-delay:.15s;}
+.hero-inner>*:nth-child(3){animation-delay:.25s;}
+.hero-inner>*:nth-child(4){animation-delay:.35s;}
+.hero-inner>*:nth-child(5){animation-delay:.45s;}
+.hero-inner>*:nth-child(6){animation-delay:.55s;}
+.hero-inner>*:nth-child(7){animation-delay:.65s;}
+.hero-inner>*:nth-child(8){animation-delay:.75s;}
+@keyframes hi{to{opacity:1;transform:none;}}
+
+@media(max-width:900px){
+  .nav-links{display:none;} .hamburger{display:flex;}
+  .ov-grid,.tasks-grid,.prog-grid{grid-template-columns:1fr;}
+  .meta-grid{grid-template-columns:repeat(2,1fr);}
+  nav{padding:0 1.5rem;} section{padding:4rem 1.5rem;}
+  #hero{padding:9rem 1.5rem 4rem;} .hero-stats{gap:1.8rem;}
+  h1{font-size:2.8rem;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-mark"><img src="logo/digitafrica_logo.jpg" alt="DIGIT Africa"/></div>
+    <span class="nav-logo-text">DIGIT Africa 2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#tasks">Workshops</a></li>
+    <li><a href="#dates">Program</a></li>
+    <li><a href="#guidelines">FAQ</a></li>
+    <li><a href="#organizers">Team</a></li>
+    <li><a href="https://forms.gle/pPA6nS7CWvuNDUjh6" target="_blank" class="nav-cta">Register →</a></li>
+  </ul>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hc hc1"></div>
+    <div class="hc hc2"></div>
+    <div class="hdots"></div>
+  </div>
+  <div class="hero-inner container">
+    <div class="eyebrow"><span class="eyebrow-dot"></span><span class="eyebrow-txt">Tunis, Tunisia · May 2026</span></div>
+    <h1>DIGIT<em>Africa</em><br/><span class="tl">Summer School</span><br/>2026</h1>
+    <p class="hero-lead">A series of scientific activities, training sessions, and <strong>hands-on workshops</strong> bringing together researchers, academics, doctoral students, and innovators around key themes of advanced networking and data science.</p>
+    <p class="hero-lead">Two parallel workshops are offered, specifically dedicated to <strong>PhD and doctoral students</strong>:</p>
+    <div class="workshops-row">
+      <div class="wb wb-a">🔵 Workshop A — SLICES-RI Post-5G Blueprint</div>
+      <div class="wb wb-b">🟢 Workshop B — SoBigData Platform Training</div>
+    </div>
+    <div class="hero-note">
+      <span class="ni">⚠️</span>
+      <span>Seats are <strong>limited</strong> and registrations will be reviewed and confirmed at a later stage. The detailed agenda and full program are available below.</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="sn">2</span><span class="sl">Workshops</span></div>
+      <div class="stat"><span class="sn">12h</span><span class="sl">Training Time</span></div>
+      <div class="stat"><span class="sn">8</span><span class="sl">Modules</span></div>
+      <div class="stat"><span class="sn">100%</span><span class="sl">Hands-on</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-navy" href="https://forms.gle/pPA6nS7CWvuNDUjh6" target="_blank">Register Now →</a>
+      <a class="btn btn-outline" href="#tasks">Explore Workshops</a>
+      <a class="btn btn-ghost" href="mailto:stancenakba@gmail.com">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div id="logos">
+  <div class="logos-inner">
+    <div class="logos-lbl">Organized in partnership with</div>
+    <div class="logos-grid">
+      <div class="logo-item">
+        <div class="logo-box"><img src="logo/ensi-logo.jpg" alt="ENSI"/></div>
+        <div class="logo-name">École Nationale des Sciences de l'Informatique</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-box"><img src="logo/riadi-logo.jpg" alt="RIADI"/></div>
+        <div class="logo-name">RIADI Laboratory</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-box"><img src="logo/slices-logo.png" alt="SLICES"/></div>
+        <div class="logo-name">SLICES-RI Research Infrastructure</div>
+      </div>
+      <div class="logo-item">
+        <div class="logo-box"><img src="logo/SoBigData-logo.png" alt="SoBigData"/></div>
+        <div class="logo-name">SoBigData Platform</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <div class="sec-label"><div class="sec-line"></div><span class="sec-txt">Program Overview</span></div>
+    <h2>About the Summer School</h2>
+    <div class="ov-body reveal">
+      The DIGIT Africa Summer School 2026 brings together two intensive hands-on workshops designed for researchers and practitioners in networking and data science. Participants gain practical experience with cutting-edge research infrastructures and tools through a structured blend of lectures, live demonstrations, and hands-on experiments.
+      <br/><br/>
+      <em>What makes a 5G experiment reproducible? How do recommendation algorithms drive polarisation in social networks?</em>
+    </div>
+    <div class="ov-grid">
+      <div class="card reveal d1">
+        <div class="card-ic ic-b">🎯</div>
+        <h3>Two Parallel Workshops</h3>
+        <p>A full-day program covering 5G network deployment with SLICES-RI and epistemic enclave detection with SoBigData tools.</p>
+      </div>
+      <div class="card reveal d2">
+        <div class="card-ic ic-t">🛠️</div>
+        <h3>Key Tools & Platforms</h3>
+        <p>CDlib, NDlib, YSocial for network analysis — OpenAirInterface, Docker, and SLICES-RI for 5G experimentation.</p>
+      </div>
+      <div class="card reveal d3">
+        <div class="card-ic ic-g">⏱️</div>
+        <h3>12 Hours of Training</h3>
+        <p>Two 6-hour sessions combining theory and hands-on practice, with coffee breaks and a lunch break included.</p>
+      </div>
+      <div class="card reveal d4">
+        <div class="card-ic ic-n">🎓</div>
+        <h3>For PhD Students</h3>
+        <p>Intermediate Python and Linux knowledge recommended. Preconfigured environments provided on both platforms — no complex setup required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section id="tasks">
+  <div class="container">
+    <div class="sec-label"><div class="sec-line"></div><span class="sec-txt">Workshop Details</span></div>
+    <h2>Workshop Descriptions</h2>
+    <p class="sec-sub">Two parallel tracks, each 6 hours, combining theory and extensive hands-on practice on real infrastructures.</p>
+    <div class="tasks-grid">
+
+      <!-- A -->
+      <div class="task-card reveal">
+        <div class="task-hdr">
+          <div class="task-letter tl-a">A</div>
+          <div class="task-info">
+            <h3>SLICES-RI Post-5G Blueprint Hands-on</h3>
+            <p>Hands-on tutorial covering 5G architecture, Docker-based deployment, and measurement workflows on the SLICES-RI infrastructure.</p>
+          </div>
+        </div>
+        <div class="task-body">
+          <div class="tag-row">
+            <span class="tag tg-b">5G</span>
+            <span class="tag tg-t">Docker</span>
+            <span class="tag tg-g">SLICES-RI</span>
+            <span class="tag tg-r">OpenAirInterface</span>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-box"><div class="mv">6 Hours</div><div class="mk">Duration</div></div>
+            <div class="meta-box"><div class="mv">Linux</div><div class="mk">Requirement</div></div>
+            <div class="meta-box"><div class="mv">4</div><div class="mk">Modules</div></div>
+          </div>
+          <div class="mlbl">🌅 Morning — Background on 5G & Reproducibility</div>
+          <div class="mod mb">
+            <div class="mod-lbl lb">Module 1 · 9:30 – 11:00</div>
+            <div class="mod-txt">Foundations — 5G principles and architecture. Understanding the interactions of core functions and RAN components composing a 5G network.</div>
+          </div>
+          <div class="mod mt">
+            <div class="mod-lbl lt">Module 2 · 11:15 – 12:45</div>
+            <div class="mod-txt">Reproducible experimental research with SLICES-RI. Setup a research environment and run a first hello-world experiment with data collection and publication.</div>
+          </div>
+          <div class="mlbl" style="margin-top:1rem;">🌆 Afternoon — 5G Experiments</div>
+          <div class="mod mg">
+            <div class="mod-lbl lg">Module 3 · 13:45 – 15:15</div>
+            <div class="mod-txt">Deploy your own 5G network with SLICES-RI. Configure 5G core and RAN, then analyze signaling traffic and compare it to theory.</div>
+          </div>
+          <div class="mod mn">
+            <div class="mod-lbl ln">Module 4 · 15:30 – 17:00</div>
+            <div class="mod-txt">Traffic workloads on 5G and analysis. Connect UEs to the network, run experiments, and design your own analysis scenario.</div>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <a href="https://raw.githubusercontent.com/NabilBADRI/digitafrica-ensi/main/SLICES.pdf" target="_blank" class="btn btn-blue" style="font-size:.84rem;padding:.62rem 1.3rem;">📄 Download Slides</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="task-card reveal d2">
+        <div class="task-hdr">
+          <div class="task-letter tl-b">B</div>
+          <div class="task-info">
+            <h3>Hands-on Training on the SoBigData Platform</h3>
+            <p>Identifying Epistemic Enclaves and Understanding Polarisation. By Giulio Rossetti (CNR-ISTI) and Andrea Failla (Italian National PhD Program in AI).</p>
+          </div>
+        </div>
+        <div class="task-body">
+          <div class="tag-row">
+            <span class="tag tg-t">CDlib</span>
+            <span class="tag tg-b">NDlib</span>
+            <span class="tag tg-g">YSocial</span>
+            <span class="tag tg-r">NetworkX</span>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-box"><div class="mv">6 Hours</div><div class="mk">Duration</div></div>
+            <div class="meta-box"><div class="mv">Python</div><div class="mk">Requirement</div></div>
+            <div class="meta-box"><div class="mv">4</div><div class="mk">Modules</div></div>
+          </div>
+          <div class="mlbl">🌅 Morning — The Anatomy of Segregation</div>
+          <div class="mod mt">
+            <div class="mod-lbl lt">Module 1 · 9:30 – 11:00</div>
+            <div class="mod-txt">Foundations with NetworkX. Load, manipulate and explore complex networks. Metric analysis: degree distribution, clustering coefficients, path lengths.</div>
+          </div>
+          <div class="mod mb">
+            <div class="mod-lbl lb">Module 2 · 11:15 – 12:45</div>
+            <div class="mod-txt">Detecting Epistemic Enclaves with CDlib. Apply Louvain, Leiden, Infomap, Label Propagation. Evaluate community cohesion, isolation, and fragmentation.</div>
+          </div>
+          <div class="mlbl" style="margin-top:1rem;">🌆 Afternoon — The Mechanics of Division</div>
+          <div class="mod mg">
+            <div class="mod-lbl lg">Module 3 · 13:45 – 15:15</div>
+            <div class="mod-txt">Simulating Polarisation with NDlib. Explore Deffuant–Weisbuch and Algorithmic Bias models. Observe phase transitions: consensus, disagreement, polarisation.</div>
+          </div>
+          <div class="mod mn">
+            <div class="mod-lbl ln">Module 4 · 15:30 – 17:00</div>
+            <div class="mod-txt">The Controlled Sandbox with YSocial. Generate synthetic networks and characterize simulation data using CDlib and NDlib to test what-if scenarios.</div>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <a href="https://raw.githubusercontent.com/NabilBADRI/digitafrica-ensi/main/SobigData.pdf" target="_blank" class="btn btn-teal" style="font-size:.84rem;padding:.62rem 1.3rem;">📄 Download Slides</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section id="dates">
+  <div class="container">
+    <div class="sec-label"><div class="sec-line"></div><span class="sec-txt">Schedule & Prerequisites</span></div>
+    <h2>Daily Program</h2>
+    <p class="sec-sub">Both workshops follow the same schedule — a structured full day maximizing hands-on practice.</p>
+    <div class="prog-grid">
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-dot td-done"><div class="inn"></div></div><div class="tl-date">09:00 – 09:30</div><div class="tl-title">Welcome & Introductions</div></div>
+        <div class="tl-item"><div class="tl-dot td-done"><div class="inn"></div></div><div class="tl-date">09:30 – 11:00</div><div class="tl-title">Module 1 — Foundations</div></div>
+        <div class="tl-item"><div class="tl-dot td-warn"></div><div class="tl-date">11:00 – 11:15</div><div class="tl-title">☕ Coffee Break</div></div>
+        <div class="tl-item"><div class="tl-dot td-done"><div class="inn"></div></div><div class="tl-date">11:15 – 12:45</div><div class="tl-title">Module 2 — Core Concepts</div></div>
+        <div class="tl-item"><div class="tl-dot td-warn"></div><div class="tl-date">12:45 – 13:45</div><div class="tl-title">🍽️ Lunch Break</div></div>
+        <div class="tl-item"><div class="tl-dot td-up"><div class="inn"></div></div><div class="tl-date">13:45 – 15:15</div><div class="tl-title">Module 3 — Advanced Experiments</div></div>
+        <div class="tl-item"><div class="tl-dot td-warn"></div><div class="tl-date">15:15 – 15:30</div><div class="tl-title">☕ Coffee Break</div></div>
+        <div class="tl-item"><div class="tl-dot td-up"><div class="inn"></div></div><div class="tl-date">15:30 – 17:00</div><div class="tl-title">Module 4 — Student Projects & Synthesis</div></div>
+      </div>
+      <div class="prereq-box reveal d2">
+        <div class="prereq-title">Technical Prerequisites</div>
+        <div class="prereq-sub">Participants should have the following background to get the most out of the workshops.</div>
+        <div class="prereq-item"><div class="pchk"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Python</strong> — Intermediate level, comfortable with data structures and writing functions</span></div>
+        <div class="prereq-item"><div class="pchk"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Linux</strong> — Basic command-line experience (required for Workshop A; not needed for Workshop B)</span></div>
+        <div class="prereq-item"><div class="pchk"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Networking</strong> — Basic concepts of networking and protocols</span></div>
+        <div class="prereq-item"><div class="pchk"><svg viewBox="0 0 10 10" fill="none"><polyline points="1,5 4,8 9,2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Data Science</strong> — Familiarity with data analysis and statistics is a plus</span></div>
+        <hr class="prereq-divider"/>
+        <div class="prereq-sub" style="margin-bottom:0;"><strong style="color:var(--navy);">Software Setup</strong><br/>Preconfigured JupyterLab environments available on SoBigData RI and SLICES-RI. Participants receive detailed setup instructions and access credentials before the event.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="guidelines">
+  <div class="container">
+    <div class="sec-label"><div class="sec-line"></div><span class="sec-txt">Information</span></div>
+    <h2>Frequently Asked Questions</h2>
+    <p class="sec-sub">Everything you need to know about registering and attending the Summer School.</p>
+    <div class="faq-list reveal" id="faq"></div>
+  </div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers">
+  <div class="container">
+    <div class="sec-label"><div class="sec-line"></div><span class="sec-txt">Our Team</span></div>
+    <h2>Organizing Committee</h2>
+    <p class="sec-sub">For inquiries: <a href="mailto:DigitAfrica-ENSI@ensi-uma.tn" style="color:var(--blue);font-weight:600;text-decoration:none;">DigitAfrica-ENSI@ensi-uma.tn</a></p>
+    <div class="org-grid">
+      <div class="org-card reveal"><div class="org-av" style="background:linear-gradient(135deg,#1a56e8,#6d28d9)">KA</div><div class="org-name">Kholoud K. Aldous</div><div class="org-affil">Northwestern University</div></div>
+      <div class="org-card reveal d1"><div class="org-av" style="background:linear-gradient(135deg,#00b4a0,#0891b2)">MB</div><div class="org-name">Md. Rafiul Biswas</div><div class="org-affil">Hamad Bin Khalifa University</div></div>
+      <div class="org-card reveal d2"><div class="org-av" style="background:linear-gradient(135deg,#e8a020,#ef4444)">MB</div><div class="org-name">Mabrouka Bessghaier</div><div class="org-affil">Northwestern University</div></div>
+      <div class="org-card reveal d3"><div class="org-av" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">KA</div><div class="org-name">Kais Attia</div><div class="org-affil">Individual Researcher</div></div>
+      <div class="org-card reveal d3"><div class="org-av" style="background:linear-gradient(135deg,#10b981,#06b6d4)">SI</div><div class="org-name">Shimaa Ibrahim</div><div class="org-affil">Northwestern University</div></div>
+      <div class="org-card reveal d4"><div class="org-av" style="background:linear-gradient(135deg,#f59e0b,#84cc16)">WZ</div><div class="org-name">Wajdi Zaghouani</div><div class="org-affil">Northwestern University</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="participate">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <h2>Ready to Join?</h2>
+      <p>Register now to secure your place in the DIGIT Africa Summer School 2026. Seats are limited and confirmed after review. The detailed programs are available below.</p>
+      <div class="cta-btns">
+        <a class="btn btn-white" href="https://forms.gle/pPA6nS7CWvuNDUjh6" target="_blank">Register Now →</a>
+        <a class="btn btn-ghost-w" href="https://raw.githubusercontent.com/NabilBADRI/digitafrica-ensi/main/SLICES.pdf" target="_blank">Workshop A PDF</a>
+        <a class="btn btn-ghost-w" href="https://raw.githubusercontent.com/NabilBADRI/digitafrica-ensi/main/SobigData.pdf" target="_blank">Workshop B PDF</a>
+        <a class="btn btn-ghost-w" href="mailto:stancenakba@gmail.com">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>© 2026 DIGIT Africa Summer School</strong> · Tunis, Tunisia</p>
+  <p>Contact: <a href="mailto:DigitAfrica-ENSI@ensi-uma.tn">DigitAfrica-ENSI@ensi-uma.tn</a> · Organized in partnership with ENSI, RIADI Lab, SLICES-RI, and SoBigData.</p>
+</footer>
+
+<script>
+const faqs=[
+  ["Who can participate?","The workshops are specifically dedicated to PhD and doctoral students interested in 5G networking and data science / social network analysis."],
+  ["Is there a registration fee?","No, participation is free. However, seats are limited and registrations will be reviewed and confirmed at a later stage."],
+  ["How do I register?","Click the 'Register Now' button and fill in the Google Form. You will be contacted with confirmation details."],
+  ["Do I need to attend both workshops?","No — the two workshops run in parallel. You choose one workshop to attend for the full day."],
+  ["What software do I need on my laptop?","For Workshop A: Python 3.10+ and SSH. For Workshop B: Python 3.10+. Preconfigured environments will be provided on the respective platforms."],
+  ["What level of Python is required?","Intermediate level — comfortable with data structures (lists, dicts), control flow, and defining functions."],
+  ["Is Linux knowledge required?","For Workshop A (SLICES-RI 5G), intermediate Linux command line knowledge is required. For Workshop B (SoBigData), it is not required."],
+  ["Will materials be available after the event?","Yes, slides and notebooks will be shared with registered participants after the event."],
+  ["Can I contact the organizers?","Yes — reach out at <a href='mailto:DigitAfrica-ENSI@ensi-uma.tn'>DigitAfrica-ENSI@ensi-uma.tn</a> for any questions not answered here."],
+];
+
+const faqEl=document.getElementById('faq');
+faqs.forEach(([q,a])=>{
+  const item=document.createElement('div');
+  item.className='faq-item';
+  item.innerHTML=`<div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>${q}</span><span class="faq-icon">+</span></div><div class="faq-a">${a}</div>`;
+  faqEl.appendChild(item);
+});
+
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50));
+</script>
+</body>
+</html>
