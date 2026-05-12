@@ -90,17 +90,86 @@ h1 .tl{color:var(--teal);}
 .btn-ghost-w:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.5);}
 
 /* LOGOS */
-#logos{background:var(--bg2);padding:3rem 2.5rem;border-bottom:1px solid var(--border);}
-.logos-inner{max-width:1100px;margin:0 auto;}
-.logos-lbl{font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);text-align:center;margin-bottom:2.5rem;font-weight:600;}
-.logos-grid{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
-.logo-item{display:flex;flex-direction:column;align-items:center;gap:1rem;opacity:.75;transition:opacity .25s;}
-.logo-item:hover{opacity:1;}
-.logo-box{width: 150px;px;height: 100px;px;background:#fff;border:2px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:.8rem;overflow:hidden;}
-.logo-box img{max: width 250px;%;max: height 200px;%;object-fit:contain;transition:filter .25s;}
-.logo-item:hover .logo-box img{filter:brightness(1.05);}
-.logo-name{font-size:.75rem;color:var(--navy);font-weight:600;text-align:center;line-height:1.4;max-width:140px;}
+#logos {
+    background: var(--bg2);
+    padding: 3rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+}
 
+.logos-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.logos-lbl {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.logos-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.logo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    /* On augmente l'opacité de base pour plus de clarté */
+    opacity: 0.9; 
+    transition: all .25s ease;
+}
+
+.logo-item:hover {
+    opacity: 1;
+    transform: translateY(-2px); /* Petit effet de survol sympa */
+}
+
+.logo-box {
+    width: 150px;
+    height: 100px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* Espace interne pour que le logo ne touche pas les bords */
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0,05); /* Optionnel : donne un peu de relief */
+}
+
+.logo-box img {
+    /* C'est ici que la magie opère */
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Garde les proportions sans déformer ni couper */
+    transition: filter .25s;
+}
+
+.logo-item:hover .logo-box img {
+    filter: brightness(1.1);
+}
+
+.logo-name {
+    font-size: .75rem;
+    color: var(--navy);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+    max-width: 140px;
+}
 /* SECTIONS */
 section{padding:6rem 2.5rem;position:relative;}
 .container{max-width:1100px;margin:0 auto;}
